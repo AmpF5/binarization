@@ -38,7 +38,7 @@ public partial class MainWindow : Window {
                 case BinarizationType.Threshold:
                     DisplayedImage.Source = ThresholdBinarization.Binarize(DisplayedImage.Source);
                     break;
-                case BinarizationType.Sauvoli:
+                case BinarizationType.Sauvola:
                     break;
                 case BinarizationType.Phansalkara:
                     break;

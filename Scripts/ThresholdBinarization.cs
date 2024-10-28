@@ -22,8 +22,10 @@ public static class ThresholdBinarization {
 
                 var colorData = Marshal.ReadInt32(pPixel);
                 var grayscale = CalculateGrayscale(colorData);
+                
                 var binaryColor = grayscale < threshold ? (byte)0 : (byte)255;
                 var binarizedColorData = (255 << 24) | (binaryColor << 16) | (binaryColor << 8) | binaryColor;
+                
                 Marshal.WriteInt32(pPixel, binarizedColorData);
             }
         }

@@ -12,7 +12,7 @@
             
             <Button Content="Threshold" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Threshold}"/>
             <Button Content="Niblack" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Niblack}"/>
-            <Button Content="Sauvoli" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Sauvoli}"/>
+            <Button Content="Sauvoli" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Sauvola}"/>
             <Button Content="Phansalkar" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Phansalkara}"/>
             <Button Content="Otsu" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Click="Apply_Binarization" CommandParameter="{x:Static local:BinarizationType.Otsu}"/>
         </StackPanel>

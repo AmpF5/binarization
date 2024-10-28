@@ -2,7 +2,7 @@ namespace binarization;
 
 public enum BinarizationType {
     Threshold,
-    Sauvoli,
+    Sauvola,
     Phansalkara,
     Otsu,
     Niblack
