@@ -26,6 +26,10 @@ public partial class MainWindow : Window {
         _orginalImage = bitmap;
         DisplayedImage.Source = bitmap;
     }
+    
+    private void ResetImage_Click(object sender, RoutedEventArgs e) {
+        DisplayedImage.Source = _orginalImage;
+    }
 
     private void Apply_Binarization(object sender, RoutedEventArgs e) {
         var button = sender as Button;
@@ -36,7 +40,7 @@ public partial class MainWindow : Window {
         try {
             switch (type) {
                 case BinarizationType.Threshold:
-                    DisplayedImage.Source = ThresholdBinarization.Binarize(DisplayedImage.Source);
+                    SliderStackPanel.Visibility = Visibility.Visible;
                     break;
                 case BinarizationType.Sauvola:
                     break;
@@ -54,6 +58,15 @@ public partial class MainWindow : Window {
             Console.WriteLine(ex);
         }
     }
+    
+    private void ThresholdSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        if (sender is not Slider slider || CurrentThresholdValue == null) 
+            return;
+        
+        CurrentThresholdValue.Text = $"Current Value: {slider.Value:F0}";
+        DisplayedImage.Source = ThresholdBinarization.Binarize(_orginalImage, (byte)slider.Value);
+    }
+
 }
 
 

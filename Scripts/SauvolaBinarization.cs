@@ -1,5 +1,5 @@
 namespace binarization.Scripts;
 
-public class SauvoliBinarization {
+public class SauvolaBinarization {
     
 }

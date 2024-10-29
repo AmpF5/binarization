@@ -15,7 +15,7 @@ public static class ThresholdBinarization {
         var height = writeableImage.PixelHeight;
         var stride = writeableImage.BackBufferStride;
         var pBackBuffer = writeableImage.BackBuffer;
-
+        
         for (var y = 0; y < height; y++) {
             for (var x = 0; x < width; x++) {
                 var pPixel = pBackBuffer + y * stride + x * 4;
