@@ -50,6 +50,7 @@ public partial class MainWindow : Window {
                 case BinarizationType.Otsu:
                     break;
                 case BinarizationType.Niblack:
+                    DisplayedImage.Source = NiblackBinarization.Binarize(_originalImage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException($"Type {type} not found");

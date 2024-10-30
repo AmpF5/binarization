@@ -23,8 +23,8 @@ public static class SauvolaBinarization {
         var blockSize = 2 * radius + 1;
         var block = new byte[blockSize * blockSize];
 
-        for (var y = 0; y < height; y++) {
-            for (var x = 0; x < width; x++) {
+        for (var y = radius; y < height - radius; y++) {
+            for (var x = radius; x < width - radius; x++) {
                 
                 Array.Clear(block, 0, block.Length);
                 
@@ -38,8 +38,8 @@ public static class SauvolaBinarization {
                     }
                 }
                 
-                var mean = CalculateMean(block);
-                var standardDeviation = CalculateStandardDeviation(block, mean);
+                var mean = MathHelper.CalculateMean(block);
+                var standardDeviation = MathHelper.CalculateStandardDeviation(block, mean);
                 var threshold = mean * (1 + k * ((standardDeviation / r) - 1));
                 
                 var pPixel = pBackBuffer + y * stride + x * 4;
@@ -59,23 +59,5 @@ public static class SauvolaBinarization {
         Console.WriteLine("Time taken: " + timeTaken.ToString(@"m\:ss\.fff"));
         
         return writeableImage;
-    }
-
-    private static double CalculateMean(byte[] block) {
-        var sum = 0.0;
-        for (var i = 0; i < block.Length; i++) {
-            sum += block[i];
-        }
-        
-        return sum / block.Length;
-    }
-    
-    private static double CalculateStandardDeviation(byte[] block, double mean) {
-        var sum = 0.0;
-        for (var i = 0; i < block.Length; i++) {
-            sum += Math.Pow(block[i] - mean, 2);
-        }
-        
-        return Math.Sqrt(sum / block.Length);
     }
 }
