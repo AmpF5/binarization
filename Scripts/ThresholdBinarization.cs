@@ -1,13 +1,12 @@
 using System.Runtime.InteropServices;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using binarization.Helpers;
 
 namespace binarization.Scripts;
 
 public static class ThresholdBinarization {
     public static ImageSource Binarize(ImageSource image, byte threshold = 128) {
-        var writeableImage = new WriteableBitmap(
-            image as BitmapImage ?? throw new InvalidOperationException("Cannot convert to BitmapImage"));
+        var writeableImage = image.ConvertToWriteableBitmap();
         
         writeableImage.Lock();
 
@@ -21,7 +20,7 @@ public static class ThresholdBinarization {
                 var pPixel = pBackBuffer + y * stride + x * 4;
 
                 var colorData = Marshal.ReadInt32(pPixel);
-                var grayscale = CalculateGrayscale(colorData);
+                var grayscale = ColorHelper.CalculateGrayscale(colorData);
                 
                 var binaryColor = grayscale < threshold ? (byte)0 : (byte)255;
                 var binarizedColorData = (255 << 24) | (binaryColor << 16) | (binaryColor << 8) | binaryColor;
@@ -32,14 +31,5 @@ public static class ThresholdBinarization {
 
         writeableImage.Unlock();
         return writeableImage;
-    }
-
-    private static byte CalculateGrayscale(int colorData) {
-        var blue = (byte)(colorData & 0xFF);
-        var green = (byte)((colorData >> 8) & 0xFF);
-        var red = (byte)((colorData >> 16) & 0xFF);
-        
-        var grayscale = (byte)((red * 0.3) + (green * 0.59) + (blue * 0.11));
-        return grayscale;
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.Win32;
 namespace binarization;
 
 public partial class MainWindow : Window {
-    private ImageSource _orginalImage = null!; 
+    private ImageSource _originalImage = null!; 
     public MainWindow() {
         InitializeComponent();
     }
@@ -23,12 +23,12 @@ public partial class MainWindow : Window {
             return;
         
         var bitmap = new BitmapImage(new Uri(openFileDialog.FileName));
-        _orginalImage = bitmap;
+        _originalImage = bitmap;
         DisplayedImage.Source = bitmap;
     }
     
     private void ResetImage_Click(object sender, RoutedEventArgs e) {
-        DisplayedImage.Source = _orginalImage;
+        DisplayedImage.Source = _originalImage;
     }
 
     private void Apply_Binarization(object sender, RoutedEventArgs e) {
@@ -43,6 +43,7 @@ public partial class MainWindow : Window {
                     SliderStackPanel.Visibility = Visibility.Visible;
                     break;
                 case BinarizationType.Sauvola:
+                    DisplayedImage.Source = SauvolaBinarization.Binarize(_originalImage);
                     break;
                 case BinarizationType.Phansalkara:
                     break;
@@ -64,9 +65,6 @@ public partial class MainWindow : Window {
             return;
         
         CurrentThresholdValue.Text = $"Current Value: {slider.Value:F0}";
-        DisplayedImage.Source = ThresholdBinarization.Binarize(_orginalImage, (byte)slider.Value);
+        DisplayedImage.Source = ThresholdBinarization.Binarize(_originalImage, (byte)slider.Value);
     }
-
 }
-
-
