@@ -6,7 +6,7 @@ using binarization.Helpers;
 namespace binarization.Scripts;
 
 public static class NiblackBinarization {
-    public static ImageSource Binarize(ImageSource image, int windowSize = 5, double k = 0.25, int p = 3, int q = 3, double r = 0.5) {
+    public static ImageSource Binarize(ImageSource image, int windowSize = 5, double k = -0.2) {
         var stopwatch = Stopwatch.StartNew();
         
         var writeableImage = image.ConvertToWriteableBitmap();
@@ -19,7 +19,6 @@ public static class NiblackBinarization {
         var grayscaleBuffer = new byte[width * height];
 
         var radius = (windowSize - 1) / 2;
-        r *= 256;
         var blockSize = 2 * radius + 1;
         
         writeableImage.Lock();
@@ -49,7 +48,7 @@ public static class NiblackBinarization {
 
                 var mean = MathHelper.CalculateMean(block);
                 var standardDeviation = MathHelper.CalculateStandardDeviation(block, mean);
-                var threshold = (short) Math.Round(mean * (1 + p * Math.Exp(-q * mean) + k * ((standardDeviation / r) - 1)));
+                var threshold = mean + k * standardDeviation;
                 
                 var grayscale = grayscaleBuffer[y * width + x];
 

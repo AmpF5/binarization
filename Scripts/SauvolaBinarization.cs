@@ -7,19 +7,19 @@ namespace binarization.Scripts;
 
 public static class SauvolaBinarization {
     public static ImageSource Binarize(ImageSource image, int windowSize = 5, double k = 0.5, int r = 128) {
-       var stopwatch = Stopwatch.StartNew();
+        var stopwatch = Stopwatch.StartNew();
+        
         var writeableImage = image.ConvertToWriteableBitmap();
 
         var width = writeableImage.PixelWidth;
         var height = writeableImage.PixelHeight;
         var stride = writeableImage.BackBufferStride;
         var pixelFormatSize = writeableImage.Format.BitsPerPixel / 8;
-        
         var pBackBuffer = writeableImage.BackBuffer;
+        var grayscaleBuffer = new byte[width * height];
+        
         var radius = (windowSize - 1) / 2;
         var blockSize = 2 * radius + 1;
-        
-        var grayscaleBuffer = new byte[width * height];
         
         writeableImage.Lock();
         var pBackBufferCopy = writeableImage.BackBuffer;
@@ -35,7 +35,6 @@ public static class SauvolaBinarization {
         });
 
         var blockLock = new ThreadLocal<byte[]>(() => new byte[blockSize * blockSize]);
-
         
         Parallel.For(radius, height - radius, y => {
             var block = blockLock.Value;

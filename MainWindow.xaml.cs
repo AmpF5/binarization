@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,6 +47,7 @@ public partial class MainWindow : Window {
                     DisplayedImage.Source = SauvolaBinarization.Binarize(_originalImage);
                     break;
                 case BinarizationType.Phansalkara:
+                    DisplayedImage.Source = PhansalkaraBinarization.Binarize(_originalImage);
                     break;
                 case BinarizationType.Otsu:
                     break;
