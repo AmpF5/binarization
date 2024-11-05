@@ -50,6 +50,7 @@ public partial class MainWindow : Window {
                     DisplayedImage.Source = PhansalkaraBinarization.Binarize(_originalImage);
                     break;
                 case BinarizationType.Otsu:
+                    DisplayedImage.Source = OtsuBinarization.Binarize(_originalImage);
                     break;
                 case BinarizationType.Niblack:
                     DisplayedImage.Source = NiblackBinarization.Binarize(_originalImage);
