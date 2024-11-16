@@ -45,5 +45,17 @@
                 <Button Content="Apply" Width="100" Height="30" Click="Apply_Binarization"/>
             </StackPanel>
         </StackPanel>
+        <StackPanel x:Name="SliderStackPanel" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,5" Visibility="Visible">
+            <TextBlock Text="Threshold" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+                <TextBlock Text="0" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <Slider x:Name="ThresholdSlider" Width="200" Minimum="0" Maximum="255" Value="128" ValueChanged="ThresholdSlider_ValueChanged"/>
+                <TextBlock Text="255" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            </StackPanel>
+
+            <TextBlock x:Name="CurrentThresholdValue" Text="{Binding Value, ElementName=ThresholdSlider, StringFormat='Current Value: {0:F0}'}" 
+                       FontSize="12" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

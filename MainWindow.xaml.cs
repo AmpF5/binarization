@@ -14,7 +14,7 @@ public partial class MainWindow : Window {
     private BinarizationType _binarizationType = BinarizationType.Threshold;
     private Button _selectedButton;
     private const int MinValue = 0;
-    private const int MaxValue = 25;
+    private int MaxValue = 25;
     public MainWindow() {
         InitializeComponent();
     }
@@ -46,16 +46,24 @@ public partial class MainWindow : Window {
         _binarizationType = type;
         switch (_binarizationType) {
             case BinarizationType.Otsu:
-                NumberTextBox.Visibility = Visibility.Collapsed;
+                NumberTextBox.Visibility = Visibility.Visible;
+                WindowSizeStackPanel.Visibility = Visibility.Visible;
+                SliderStackPanel.Visibility = Visibility.Collapsed;
                 break;
             case BinarizationType.Threshold:
-                NumberTextBox.Visibility = Visibility.Visible;
+                WindowSizeStackPanel.Visibility = Visibility.Collapsed;
+                NumberTextBox.Visibility = Visibility.Collapsed;
+                SliderStackPanel.Visibility = Visibility.Visible;
+                MaxValue = 255;
                 break;
             case BinarizationType.Sauvola:
             case BinarizationType.Phansalkara:
             case BinarizationType.Niblack:
             default:
+                SliderStackPanel.Visibility = Visibility.Collapsed;
+                WindowSizeStackPanel.Visibility = Visibility.Visible;
                 NumberTextBox.Visibility = Visibility.Visible;
+                MaxValue = 25;
                 break;
         }
         
@@ -103,7 +111,6 @@ public partial class MainWindow : Window {
                 textBox.Text = MaxValue.ToString();
                 textBox.CaretIndex = textBox.Text.Length;
             }
-
             _windowSize = int.Parse(textBox.Text);
         }
         else {
@@ -121,5 +128,13 @@ public partial class MainWindow : Window {
             BinarizationType.Niblack => NiblackBinarization.Binarize(_originalImage, windowSize: _windowSize),
             _ => throw new ArgumentOutOfRangeException($"Type {_binarizationType} not found")
         };
+    }
+    
+    private void ThresholdSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        if (sender is not Slider slider || CurrentThresholdValue == null) 
+            return;
+        
+        CurrentThresholdValue.Text = $"Current Value: {slider.Value:F0}";
+        DisplayedImage.Source = ThresholdBinarization.Binarize(_originalImage, (byte)slider.Value);
     }
 }
